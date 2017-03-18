@@ -417,22 +417,8 @@ proc ::rss-synd::feed_info {data {target "feed"}} {
 
 # decompress gzip formatted data
 proc ::rss-synd::feed_gzip {cdata} {
-	variable packages
 
-	if {(![info exists packages(trf)]) || \
-	    ($packages(trf) != 0)} {
-		error "Trf package not found."
-	}
-
-	# remove the 10 byte gzip header and 8 byte footer
-	set cdata [string range $cdata 10 [expr { [string length $cdata] - 9 } ]]
-
-	# decompress the raw data
-	if {[catch {zip -mode decompress -nowrap 1 $cdata} data] != 0} {
-		error $data
-	}
-
-	return $data
+	return $cdata
 }
 
 proc ::rss-synd::feed_read { } {
